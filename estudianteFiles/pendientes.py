@@ -20,17 +20,6 @@ def obtener_pendientes(usuario):
     except Exception as e:
         return {"success": False, "message": str(e)}
 
-# Funcion para guardar los pendientes
-def guardar_pendientes(pendientes):
-    try:
-        # Se abre el archivo de pendientes
-        with open('estudianteFiles/archivosTxt/pendientes.txt', 'w') as archivo:
-            #por cada pendiente se escribe en el archivo una linea con los datos del pendiente
-            for pendiente in pendientes:
-                pendiente_str = [str(elemento) for elemento in pendiente]
-                archivo.write(','.join(pendiente_str) + '\n')
-    except Exception as e:
-        raise Exception(f"Error al guardar pendientes: {str(e)}")
 
 # Funcion para añadir un pendiente
 def añadir_pendiente(fecha, id_pendiente, monto, nombre, usuario):
