@@ -45,116 +45,11 @@
     </div><!-- End Logo -->
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-        <li class="nav-item dropdown">
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number" id="notificationCount"></span>
-          </a><!-- End Notification Icon -->
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications" aria-labelledby="navbarDropdown"
-            id="notificationDropdown">
-
-          </ul><!-- End Notification Dropdown Items -->
-        </li><!-- End Notification Nav -->
-
-        <script>
-          $(document).ready(function () {
-            // Función para cargar las notificaciones
-            function loadNotifications() {
-              $.ajax({
-                url: 'notificaciones.php',
-                type: 'GET',
-                dataType: 'json', // Especificamos que esperamos JSON como respuesta
-                success: function (response) {
-                  // Actualizar el contador de notificaciones
-                  $('#notificationCount').text(response.length);
-
-                  // Vaciar el contenedor de notificaciones
-                  $('#notificationDropdown').empty();
-
-                  $('#notificationDropdown').append(`
-                                    <li class="dropdown-header">
-                                            Tienes ${response.length} notificaciones nuevas
-                                            <a href="#" style="text-decoration: none;"><span class="badge rounded-pill bg-primary p-2 ms-2" style="opacity: 0; border: none;" disabled>Ver todo</span></a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                `);
-
-                  // Agregar las nuevas notificaciones
-                  response.forEach(function (notification) {
-                    $('#notificationDropdown').append(`
-                                        <li class="notification-item">
-                                            <i class="bi bi-${notification.icon} text-${notification.color}"></i>
-                                            <div>
-                                                <h4>${notification.title}</h4>
-                                                <p>${notification.message}</p>
-                                                <p>${notification.time}</p>
-                                            </div>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                    `);
-                  });
-                },
-                error: function (xhr, status, error) {
-                  console.error('Error al cargar las notificaciones:', error);
-                }
-              });
-            }
-
-            // Cargar las notificaciones al cargar la página
-            loadNotifications();
-
-            // Actualizar las notificaciones cada cierto tiempo (por ejemplo, cada 5 segundos)
-            setInterval(function () {
-              loadNotifications();
-            }, 5000);
-          });
-        </script>
-
-
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-
-            <span class="d-none d-md-block dropdown-toggle ps-2">
-              <?php
-                        if(isset($_SESSION['usuario'])) {
-                            echo $_SESSION['usuario'];
-                        }
-                        ?>
-            </span>
-          </a>
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>
-                <?php
-
-                            if(isset($_SESSION['usuario'])) {
-                                echo $_SESSION['usuario'];
-                            }
-                            ?>
-              </h6>
-              <span>
-                <?php echo($codigo); ?>
-              </span>
-
-            </li>
             <li>
-              <hr class="dropdown-divider">
-            </li>
-
-
-
-
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+              <a class="dropdown-item d-flex align-items-center" href="Login/Login.html">
+                <i class="bi bi-box-arrow-right" style="color: blue"></i>
               </a>
             </li>
 
@@ -532,10 +427,10 @@
 
 
                       <li class="list-group-item" id="divOtro1"><i class="bi bi-controller me-1 text-danger"></i>
-                        <spam id="Otros1">Otros: $30</spam>
+                        <spam id="Otros1"></spam>
                       </li>
                       <li class="list-group-item" id="divTransporte1"><i class="bi bi-bus-front me-1 text-success"></i>
-                        <spam id="Transporte1">Transporte:$40</spam>
+                        <spam id="Transporte1"></spam>
                       </li>
 
                       <li class="list-group-item" id="divAlimentacion1"><i
@@ -544,11 +439,11 @@
                       </li>
 
                       <li class="list-group-item" id="divOtro2"><i class="bi bi-controller me-1 text-danger"></i>
-                        <spam id="Otros2">Otros: $30</spam>
+                        <spam id="Otros2"></spam>
                       </li>
 
                       <li class="list-group-item" id="divTransporte2"><i class="bi bi-bus-front me-1 text-success"></i>
-                        <spam id="Transporte2">Transporte:$40</spam>
+                        <spam id="Transporte2"></spam>
                       </li>
 
                       <li class="list-group-item" id="divAlimentacion2"><i

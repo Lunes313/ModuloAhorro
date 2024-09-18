@@ -14,7 +14,7 @@ def leerGastosH(nombre):
         return {"alimentacion": [0], "vivienda": [0],"servicios": [0], "Otros": [0], "Ahorro": 0}
 
 #funcion para mostrar el total de lo gastado
-def mostrarTotalGastos(gastos):
+def mostrarTotalGastosH(gastos):
     #se suman los valores de cada lista en cada categoria
     gastosTotales = sum(sum(value) for key, value in gastos.items() if key != 'Ahorro')
     return gastosTotales

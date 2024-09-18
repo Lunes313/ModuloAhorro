@@ -3,13 +3,17 @@ from flask_cors import CORS
 from estudianteFiles.presupuestos import mostrarTotalP, leerPresupuestosE, editarPresupuestoE, definirMeta
 from estudianteFiles.gastos import leerGastosE, mostrarTotalGastos, añadirGastoE, sumarGastos, editar_Ahorro
 from estudianteFiles.pendientes import añadir_pendiente, eliminar_pendiente, obtener_pendientes
-from hogarFiles.presupuestos import  leerPresupuestosH, editarPresupuestoH,definirMetaH
-from hogarFiles.gastos import leerGastosH,sumarGastosH,añadirGastoH,editar_AhorroH
+from hogarFiles.presupuestos import  leerPresupuestosH, editarPresupuestoH,definirMetaH, mostrarTotalPH
+from hogarFiles.gastos import leerGastosH,sumarGastosH,añadirGastoH,editar_AhorroH, mostrarTotalGastosH
 from hogarFiles.pendientes import añadir_pendienteH, eliminar_pendienteH, obtener_pendientesH
 app = Flask(__name__)
 CORS(app)  # Habilita CORS para todas las rutas
 
+# Variable global para almacenar el nombre del usuario
+# Esta practica no se considera una practica segura, pero ya que trabajamos de manera local no hay problema
 name = None
+
+# Funciones para manejar usuarios
 def verificarUsuario(nombre, contrasena):
     # Diccionario con usuarios
     usuarios = {
@@ -74,7 +78,7 @@ def procesar_datos():
     else:
         return jsonify({"mensaje": "Acceso denegado"})
 
-
+#Obtener los datos de los usuarios(Estudiante) para mostrarlos en la pagina principal
 @app.route('/datos', methods=['GET'])
 def get_presupuesto():
     if name is None:
@@ -86,17 +90,20 @@ def get_presupuesto():
         gastosS= sumarGastos(name)
         return jsonify({"presupuesto_total": totalP, "gastado": gastado, "presupuestos": leerPresupuestosE(name), "gastosS": gastosS, "gastos": leerGastosE(name), "Meta": leerPresupuestosE(name)["Meta"]})
 
+#Obtener los datos de los usuarios(Hogar) para mostrarlos en la pagina principal
 @app.route('/datosH', methods=['GET'])
 def get_presupuestoH():
     if name is None:
         return jsonify({"mensaje": "No se ha iniciado sesión"})
     else:
-        gastado = mostrarTotalGastos(leerGastosH(name))
-        totalP = mostrarTotalP(leerPresupuestosH(name))
+        gastado = mostrarTotalGastosH(leerGastosH(name))
+        totalP = mostrarTotalPH(leerPresupuestosH(name))
         #sumar gastos por cada categoria
         gastosS= sumarGastosH(name)
         return jsonify({"presupuesto_total": totalP, "gastado": gastado, "presupuestos": leerPresupuestosH(name), "gastosS": gastosS, "gastos": leerGastosH(name), "Meta": leerPresupuestosH(name)["Meta"]})
 
+
+# Funciones para manejar presupuestos del estudiante
 @app.route('/editar_presupuesto', methods=['POST'])
 def editar_presupuesto():
     data = request.get_json()
@@ -115,7 +122,8 @@ def editar_presupuesto():
             return jsonify({"success": False, "message": mensaje}), 404
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
-    
+
+# Funciones para manejar presupuestos del hogar
 @app.route('/editar_presupuestoH', methods=['POST'])
 def editar_presupuestoH():
     data = request.get_json()
