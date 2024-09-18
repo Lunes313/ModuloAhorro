@@ -13,7 +13,7 @@ CORS(app)  # Habilita CORS para todas las rutas
 # Esta practica no se considera una practica segura, pero ya que trabajamos de manera local no hay problema
 name = None
 
-# Funciones para manejar usuarios
+# Funcion para manejar los usuarios
 def verificarUsuario(nombre, contrasena):
     # Diccionario con usuarios
     usuarios = {
@@ -44,7 +44,8 @@ def verificarUsuario(nombre, contrasena):
             return usuario["perfil"]
     return False
 
-
+# Funcion para manejar los usuarios enviados por el formulario de inicio de sesion
+# enviandolos a la pagina principal de hogar o estudiante
 @app.route('/procesar_datos', methods=['POST'])
 def procesar_datos():
     # Obtener datos del formulario
@@ -103,7 +104,7 @@ def get_presupuestoH():
         return jsonify({"presupuesto_total": totalP, "gastado": gastado, "presupuestos": leerPresupuestosH(name), "gastosS": gastosS, "gastos": leerGastosH(name), "Meta": leerPresupuestosH(name)["Meta"]})
 
 
-# Funciones para manejar presupuestos del estudiante
+# Funcion para manejar presupuestos del estudiante
 @app.route('/editar_presupuesto', methods=['POST'])
 def editar_presupuesto():
     data = request.get_json()
@@ -123,7 +124,7 @@ def editar_presupuesto():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-# Funciones para manejar presupuestos del hogar
+# Funcion para manejar presupuestos del hogar
 @app.route('/editar_presupuestoH', methods=['POST'])
 def editar_presupuestoH():
     data = request.get_json()
@@ -144,6 +145,7 @@ def editar_presupuestoH():
         return jsonify({"success": False, "message": str(e)}), 500
 
 
+# Funcion para manejar gastos del estudiante
 @app.route('/editar_gasto', methods=['POST'])
 def editar_gasto():
     data = request.get_json()
@@ -163,6 +165,7 @@ def editar_gasto():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
+# Funcion para manejar gastos del hogar
 @app.route('/editar_gastoH', methods=['POST'])
 def editar_gastoH():
     data = request.get_json()
@@ -182,7 +185,7 @@ def editar_gastoH():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-
+# Funcion para manejar la meta de ahorro del estudiante
 @app.route('/definir_meta', methods=['POST'])
 def definir_meta():
     data = request.get_json()
@@ -200,7 +203,8 @@ def definir_meta():
             return jsonify({"success": False, "message": mensaje}), 404
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
-    
+
+# Funcion para manejar la meta de ahorro del hogar
 @app.route('/definir_metaH', methods=['POST'])
 def definir_metaH():
     data = request.get_json()
@@ -219,7 +223,7 @@ def definir_metaH():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-
+# Funcion para manejar ahorro del estudiante
 @app.route('/ahorro', methods=['POST'])
 def editarAhorro():
     data = request.get_json()
@@ -238,8 +242,10 @@ def editarAhorro():
             return jsonify({"success": False, "message": mensaje}), 404
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
-    
-@app.route('/ahorroH', methods=['POST']) #Este es el que no me quiere dar dice que la lista de ahorro no es iterable
+
+
+# Funcion para manejar ahorro del hogar
+@app.route('/ahorroH', methods=['POST'])
 def editarAhorroH():
     data = request.get_json()
     usuario = name
@@ -258,8 +264,8 @@ def editarAhorroH():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
-# Funciones para manejar pendientes
 
+# Funcion para manejar pendientes del estudiante
 @app.route('/añadir_pendiente', methods=['POST'])
 def añadir_pendiente_route():
     data = request.get_json()
@@ -279,7 +285,8 @@ def añadir_pendiente_route():
         return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
-    
+
+# Funcion para manejar pendientes del hogar
 @app.route('/añadir_pendienteH', methods=['POST'])
 def añadir_pendiente_routeH():
     data = request.get_json()
@@ -300,6 +307,7 @@ def añadir_pendiente_routeH():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
+# Funcion para eliminar pendientes del estudiante
 @app.route('/eliminar_pendiente', methods=['POST'])
 def eliminar_pendiente_route():
     data = request.get_json()
@@ -316,7 +324,8 @@ def eliminar_pendiente_route():
         return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
-    
+
+# Funcion para eliminar pendientes del hogar
 @app.route('/eliminar_pendienteH', methods=['POST'])
 def eliminar_pendiente_routeH():
     data = request.get_json()
@@ -334,6 +343,7 @@ def eliminar_pendiente_routeH():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
+# Funcion para obtener pendientes del estudiante
 @app.route('/pendientes', methods=['GET'])
 def get_pendientes():
     if name is None:
@@ -343,7 +353,8 @@ def get_pendientes():
         return jsonify(obtener_pendientes(name))
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
-    
+
+# Funcion para obtener pendientes del hogar
 @app.route('/pendientesH', methods=['GET'])
 def get_pendientesH():
     if name is None:
